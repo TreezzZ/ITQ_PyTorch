@@ -36,6 +36,8 @@ optional arguments:
   ```
 
 ## EXPERIMENTS
+VGG16 features.
+
 cifar10: 10000 query images, 5000 training images.
 
 
