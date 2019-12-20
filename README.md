@@ -1,4 +1,4 @@
-# A pytorch implementation for paper "terative Quantization: A Procrustean Approach to Learning Binary Codes for Large-scale Image Retrieval" TPAMI-2013
+# A pytorch implementation for paper "Iterative Quantization: A Procrustean Approach to Learning Binary Codes for Large-scale Image Retrieval" TPAMI-2013
 
 ## REQUIREMENTS
 1. pytorch 1.1
