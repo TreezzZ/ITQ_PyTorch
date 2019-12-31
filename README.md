@@ -33,11 +33,13 @@ optional arguments:
 ```
 
 ## EXPERIMENTS
-1. cifar10-gist dataset. Gist features, 1000 query images, 5000 training images.
-2. cifar-10-alexnet dataset. Alexnet features, 1000 query images, 5000 training images.
-3. nus-wide-tc21-alexnet dataset. Alexnet features, top 21 classes, 2100 query images, 10500 training images.
-4. imagenet-tc100-alexnet dataset. Alexnet features, top 100 classes, 5000 query images, 10000 training images.
+cifar10-gist dataset. Gist features, 1000 query images, 5000 training images.
 
+cifar-10-alexnet dataset. Alexnet features, 1000 query images, 5000 training images.
+
+nus-wide-tc21-alexnet dataset. Alexnet features, top 21 classes, 2100 query images, 10500 training images.
+
+imagenet-tc100-alexnet dataset. Alexnet features, top 100 classes, 5000 query images, 10000 training images.
 
    Bits     | 8 | 16 | 24 | 32 | 48 | 64 | 96 | 128 
    ---        |   ---  |   ---   |   ---   |   ---   |   ---   |   ---   |   ---   |   ---   
