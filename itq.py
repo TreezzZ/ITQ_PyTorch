@@ -2,7 +2,7 @@ import torch
 import numpy as np
 
 from sklearn.decomposition import PCA
-from utils.evaluate import mean_average_precision
+from utils.evaluate import mean_average_precision, pr_curve
 
 
 def train(
@@ -31,7 +31,7 @@ def train(
         topk(int): Calculate top k data points map.
 
     Returns
-        mAP(float): Mean Average Precision.
+        checkpoint(dict): Checkpoint.
     """
     # Initialization
     query_data, query_targets, retrieval_data, retrieval_targets = query_data.to(device), query_targets.to(device), retrieval_data.to(device), retrieval_targets.to(device)
@@ -65,7 +65,29 @@ def train(
         topk,
     )
 
-    return mAP
+    # P-R curve
+    P, Recall = pr_curve(
+        query_code,
+        retrieval_code,
+        query_targets,
+        retrieval_targets,
+        device,
+    )
+
+    # Save checkpoint
+    checkpoint = {
+        'qB': query_code,
+        'rB': retrieval_code,
+        'qL': query_targets,
+        'rL': retrieval_targets,
+        'pca': pca,
+        'rotation_matrix': R,
+        'P': P,
+        'R': Recall,
+        'map': mAP,
+    }
+
+    return checkpoint
 
 
 def generate_code(data, code_length, R, pca):

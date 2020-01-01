@@ -1,4 +1,5 @@
 import torch
+import random
 import numpy as np
 import argparse
 import os
@@ -14,12 +15,17 @@ def run():
     logger.add(os.path.join('logs', '{}.log'.format(args.dataset)), rotation="500 MB", level="INFO")
     logger.info(args)
 
+    random.seed(args.seed)
+    torch.manual_seed(args.seed)
+    torch.cuda.manual_seed(args.seed)
+    np.random.seed(args.seed)
+
     # Load dataset
     train_data, _, query_data, query_targets, retrieval_data, retrieval_targets = load_data(args.dataset, args.root)
 
     # Training
     for code_length in args.code_length:
-        mAP = itq.train(
+        checkpoint = itq.train(
             train_data,
             query_data,
             query_targets,
@@ -30,7 +36,9 @@ def run():
             args.device,
             args.topk,
         )
-        logger.info('[code_length:{}][map:{:.4f}]'.format(code_length, mAP))
+        logger.info('[code_length:{}][map:{:.4f}]'.format(code_length, checkpoint['map']))
+        torch.save(checkpoint, 'checkpoints/{}_code_{}_map_{:.4f}.pt'.format(args.dataset, code_length, checkpoint['map']))
+
 
 
 def load_config():
@@ -56,6 +64,8 @@ def load_config():
                         help='Calculate map of top k.(default: ALL)')
     parser.add_argument('--gpu', default=None, type=int,
                         help='Using gpu.(default: False)')
+    parser.add_argument('--seed', default=3367, type=int,
+                        help='Random seed.(default: 3367)')
 
     args = parser.parse_args()
 
